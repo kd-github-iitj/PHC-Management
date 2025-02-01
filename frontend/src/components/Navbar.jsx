@@ -33,7 +33,7 @@ const Navbar = () => {
     <>
       <nav className={"container"}>
         <div className="logo">
-          <img src="/logo.png" alt="logo" className="logo-img" />
+          <img src="/IITJ_COLOURED.png" alt="logo" className="logo-img" />
         </div>
         <div className={show ? "navLinks showmenu" : "navLinks"}>
           <div className="links">
@@ -48,11 +48,11 @@ const Navbar = () => {
             </Link>
           </div>
           {isAuthenticated ? (
-            <button className="logoutBtn btn" onClick={handleLogout}>
+            <button className="logoutBtn btn" onClick={handleLogout} style={{ cursor: 'pointer' }}>
               LOGOUT
             </button>
           ) : (
-            <button className="loginBtn btn" onClick={goToLogin}>
+            <button className="loginBtn btn" onClick={goToLogin} style={{ cursor: 'pointer' }}>
               LOGIN
             </button>
           )}

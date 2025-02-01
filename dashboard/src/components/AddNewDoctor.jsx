@@ -86,7 +86,7 @@ const AddNewDoctor = () => {
   return (
     <section className="page">
       <section className="container add-doctor-form">
-        <img src="/logo.png" alt="logo" className="logo"/>
+        <img src="/frontend/public/IITJ_COLOURED.png" alt="logo" className="logo"/>
         <h1 className="form-title">REGISTER A NEW DOCTOR</h1>
         <form onSubmit={handleAddNewDoctor}>
           <div className="first-wrapper">
@@ -165,7 +165,7 @@ const AddNewDoctor = () => {
                   );
                 })}
               </select>
-              <button type="submit">Register New Doctor</button>
+              <button type="submit" style={{ cursor: 'pointer' }}>Register New Doctor</button>
             </div>
           </div>
         </form>
