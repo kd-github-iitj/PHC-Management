@@ -1,3 +1,9 @@
-node_modules
-backend/config.env
+# env files
+.env
+.env.*
+config.env
 backend/.env
+backend/config.env
+frontend/.env
+dashboard/.env
+node_modules
