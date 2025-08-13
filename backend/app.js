@@ -28,7 +28,12 @@ const corsOptions = {
   origin: function (origin, callback) {
     // Allow requests with no origin (like Postman, curl)
     if (!origin) return callback(null, true);
+    // Exact allowlist (production sites + local dev)
     if (allowedOrigins.includes(origin)) return callback(null, true);
+    // Allow Vercel/Netlify preview deployments
+    if (origin.endsWith('.vercel.app') || origin.endsWith('.netlify.app')) {
+      return callback(null, true);
+    }
     return callback(new Error("Not allowed by CORS"));
   },
   methods: ["GET", "POST", "DELETE", "PUT", "OPTIONS"],
