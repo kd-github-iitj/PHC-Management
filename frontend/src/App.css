@@ -1,13 +1,14 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   overflow-x: hidden;
-  font-family: "Montserrat", sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 body {
-  background: #e5e5e5;
+  background: #f0f6ff;
+  color: #0f172a;
 }
 .btn {
   padding: 7px 20px;
@@ -21,7 +22,7 @@ body {
   color: #111;
 }
 .purple-btn {
-  background: #9083d5;
+  background: #4fa3ff;
   color: #fff;
 }
 p,
@@ -92,8 +93,8 @@ h6 {
   font-size: 40px;
 }
 .hero .banner p {
-  color: #111;
-  letter-spacing: 2px;
+  color: #334155;
+  letter-spacing: 1.2px;
 }
 .hero .banner span {
   position: absolute;
@@ -143,6 +144,7 @@ h6 {
   .hero {
     flex-direction: column;
   }
+  .hero .banner span { display: none; }
   @media (max-width: 700px) {
     .hero {
       padding-bottom: 40px;
@@ -184,7 +186,9 @@ h6 {
   font-size: 24px;
   padding: 10px 10px 10px 40px;
   border-radius: 7px;
-  border: 1px solid gray;
+  border: 1px solid #cbd5e1;
+  background: #fff;
+  color: #0f172a;
 }
 .form-component button {
   padding: 10px 35px;
@@ -195,7 +199,7 @@ h6 {
   border-radius: 8px;
   font-size: 24px;
   margin-bottom: 30px;
-  background: linear-gradient(140deg, #9083d5, #271776ca);
+  background: linear-gradient(140deg, #4fa3ff, #1976d2);
 }
 .form-component .wrapper {
   display: flex;
@@ -221,12 +225,8 @@ h6 {
   max-width: 1200px;
   margin: 100px auto 20px auto;
 }
-.login-form h2 {
-  color: #000;
-}
-.register-form h2 {
-  color: #000;
-}
+.login-form h2 { color: #0f172a; }
+.register-form h2 { color: #0f172a; }
 @media (max-width: 1110px) {
   .appointment-form form div:nth-child(4) {
     flex-direction: column;
@@ -288,7 +288,7 @@ h6 {
 }
 .message-form h2 {
   text-align: center;
-  color: #000;
+  color: #0f172a;
   position: relative;
 }
 .message-form img {
@@ -335,7 +335,7 @@ footer .content div ul a {
   text-decoration: none;
 }
 footer .content div ul a:hover {
-  color: #8570ed;
+  color: #1976d2;
   transition: 0.3s;
 }
 footer .content div ul li span {
@@ -462,7 +462,7 @@ nav .navLinks .links {
 }
 nav .navLinks .links a {
   text-decoration: none;
-  color: #222;
+  color: #1f2937;
   font-size: 20px;
   font-weight: 600;
   letter-spacing: 1.4px;
@@ -482,12 +482,8 @@ nav .btn {
   font-weight: 600;
   z-index: 2;
 }
-nav .logoutBtn {
-  background: linear-gradient(135deg, black, rgb(49, 49, 49));
-}
-nav .loginBtn {
-  background: linear-gradient(135deg, black, rgb(49, 49, 49));
-}
+nav .logoutBtn { background: linear-gradient(135deg, #4fa3ff, #1976d2); }
+nav .loginBtn { background: linear-gradient(135deg, #4fa3ff, #1976d2); }
 nav .hamburger {
   display: none;
 }
@@ -562,9 +558,7 @@ nav svg {
   }
 }
 @media (max-width: 555px) {
-  nav {
-    background: #fff;
-  }
+  nav { background: #fff; }
   nav .navLinks {
     background: #fff;
     width: 100%;
@@ -587,3 +581,11 @@ input[type="time"]:before {
 footer .logo-img{
   width: 100%;
 }
+
+/* Admin link style */
+.admin-link {
+  padding: 6px 14px;
+  border-radius: 8px;
+  background: #e0efff;
+}
+.admin-link:hover { background: #cfe6ff; }

@@ -1,14 +1,12 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   overflow-x: hidden;
-  font-family: "Montserrat", sans-serif;
+  font-family: "Poppins", sans-serif;
 }
-body {
-  background: #3939d9f2;
-}
+body { background: #f0f6ff; }
 .container {
   padding: 0 100px;
 }
@@ -19,7 +17,7 @@ body {
 }
 .page {
   margin-left: 120px;
-  background: #e5e5e5;
+  background: #eef6ff;
   padding: 40px;
   height: 100vh;
   border-top-left-radius: 50px;
@@ -110,7 +108,7 @@ body {
   border-radius: 8px;
   font-size: 24px;
   margin-bottom: 30px;
-  background: linear-gradient(140deg, #9083d5, #271776ca);
+  background: linear-gradient(140deg, #4fa3ff, #1976d2);
 }
 .form-component .wrapper {
   display: flex;
@@ -197,7 +195,7 @@ body {
   font-size: 16px;
 }
 .dashboard .banner:first-child .secondBox {
-  background: #3939d9f2;
+  background: #1976d2;
   color: #fff;
 }
 .dashboard .banner:first-child .thirdBox {
