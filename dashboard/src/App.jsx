@@ -12,6 +12,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Sidebar from "./components/Sidebar";
 import AddNewAdmin from "./components/AddNewAdmin";
 import "./App.css";
+const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://localhost:4000";
 
 const App = () => {
   const { isAuthenticated, setIsAuthenticated, admin, setAdmin } =
@@ -21,7 +22,7 @@ const App = () => {
     const fetchUser = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:4000/api/v1/user/admin/me",
+          `${API_BASE}/api/v1/user/admin/me`,
           {
             withCredentials: true,
           }

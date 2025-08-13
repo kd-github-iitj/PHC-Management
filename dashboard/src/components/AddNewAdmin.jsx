@@ -3,6 +3,7 @@ import { Context } from "../main";
 import { Navigate, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
+const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://localhost:4000";
 
 const AddNewAdmin = () => {
   const { isAuthenticated, setIsAuthenticated } = useContext(Context);
@@ -23,7 +24,7 @@ const AddNewAdmin = () => {
     try {
       await axios
         .post(
-          "http://localhost:4000/api/v1/user/admin/addnew",
+          `${API_BASE}/api/v1/user/admin/addnew`,
           { firstName, lastName, email, phone, nic, dob, gender, password },
           {
             withCredentials: true,
@@ -44,7 +45,8 @@ const AddNewAdmin = () => {
           setPassword("");
         });
     } catch (error) {
-      toast.error(error.response.data.message);
+      const msg = error?.response?.data?.message || error?.message || "Request failed";
+      toast.error(msg);
     }
   };
 

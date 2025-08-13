@@ -4,6 +4,8 @@ import { toast } from "react-toastify";
 import { Context } from "../main";
 import { Link, useNavigate, Navigate } from "react-router-dom";
 
+const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://localhost:4000";
+
 const Login = () => {
   const { isAuthenticated, setIsAuthenticated } = useContext(Context);
 
@@ -18,7 +20,7 @@ const Login = () => {
     try {
       await axios
         .post(
-          "http://localhost:4000/api/v1/user/login",
+          `${API_BASE}/api/v1/user/login`,
           { email, password, confirmPassword, role: "Patient" },
           {
             withCredentials: true,
@@ -34,7 +36,11 @@ const Login = () => {
           setConfirmPassword("");
         });
     } catch (error) {
-      toast.error(error.response.data.message);
+      const msg =
+        error?.response?.data?.message ||
+        error?.message ||
+        "Request failed";
+      toast.error(msg);
     }
   };
 

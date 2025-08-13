@@ -10,6 +10,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { Context } from "../main";
 import { useNavigate } from "react-router-dom";
+const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://localhost:4000";
 
 const Sidebar = () => {
   const [show, setShow] = useState(false);
@@ -18,7 +19,7 @@ const Sidebar = () => {
 
   const handleLogout = async () => {
     await axios
-      .get("http://localhost:4000/api/v1/user/admin/logout", {
+      .get(`${API_BASE}/api/v1/user/admin/logout`, {
         withCredentials: true,
       })
       .then((res) => {
@@ -26,7 +27,8 @@ const Sidebar = () => {
         setIsAuthenticated(false);
       })
       .catch((err) => {
-        toast.error(err.response.data.message);
+        const msg = err?.response?.data?.message || err?.message || "Request failed";
+        toast.error(msg);
       });
   };
 

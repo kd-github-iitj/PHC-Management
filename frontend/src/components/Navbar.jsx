@@ -5,13 +5,16 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { Context } from "../main";
 
+const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://localhost:4000";
+const DASHBOARD_URL = import.meta.env.VITE_DASHBOARD_URL || "http://localhost:5173";
+
 const Navbar = () => {
   const [show, setShow] = useState(false);
   const { isAuthenticated, setIsAuthenticated } = useContext(Context);
 
   const handleLogout = async () => {
     await axios
-      .get("http://localhost:4000/api/v1/user/patient/logout", {
+      .get(`${API_BASE}/api/v1/user/patient/logout`, {
         withCredentials: true,
       })
       .then((res) => {
@@ -19,7 +22,9 @@ const Navbar = () => {
         setIsAuthenticated(false);
       })
       .catch((err) => {
-        toast.error(err.response.data.message);
+        const msg =
+          err?.response?.data?.message || err?.message || "Request failed";
+        toast.error(msg);
       });
   };
 
@@ -46,6 +51,16 @@ const Navbar = () => {
             <Link to={"/about"} onClick={() => setShow(!show)}>
               About Us
             </Link>
+            <a
+              href={DASHBOARD_URL}
+              target="_blank"
+              rel="noreferrer"
+              onClick={() => setShow(false)}
+              className="admin-link"
+              style={{ textDecoration: "none", color: "inherit" }}
+            >
+              Admin
+            </a>
           </div>
           {isAuthenticated ? (
             <button className="logoutBtn btn" onClick={handleLogout} style={{ cursor: 'pointer' }}>

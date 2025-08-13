@@ -3,6 +3,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Context } from "../main";
 import axios from "axios";
+const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://localhost:4000";
 
 const AddNewDoctor = () => {
   const { isAuthenticated, setIsAuthenticated } = useContext(Context);
@@ -58,7 +59,7 @@ const AddNewDoctor = () => {
       formData.append("doctorDepartment", doctorDepartment);
       formData.append("docAvatar", docAvatar);
       await axios
-        .post("http://localhost:4000/api/v1/user/doctor/addnew", formData, {
+        .post(`${API_BASE}/api/v1/user/doctor/addnew`, formData, {
           withCredentials: true,
           headers: { "Content-Type": "multipart/form-data" },
         })
@@ -76,7 +77,8 @@ const AddNewDoctor = () => {
           setPassword("");
         });
     } catch (error) {
-      toast.error(error.response.data.message);
+      const msg = error?.response?.data?.message || error?.message || "Request failed";
+      toast.error(msg);
     }
   };
 
