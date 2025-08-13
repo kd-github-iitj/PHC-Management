@@ -14,13 +14,30 @@ config();
 config({ path: "./config.env" });
 const app = express();
 
-app.use(
-  cors({
-    origin: [process.env.FRONTEND_URL_ONE, process.env.FRONTEND_URL_TWO],
-    method: ["GET", "POST", "DELETE", "PUT"],
-    credentials: true,
-  })
-);
+// Configure CORS to allow local dev frontends and env-configured origins
+const allowedOrigins = [
+  process.env.FRONTEND_URL_ONE,
+  process.env.FRONTEND_URL_TWO,
+  "http://localhost:5173",
+  "http://localhost:5174",
+  "http://127.0.0.1:5173",
+  "http://127.0.0.1:5174",
+].filter(Boolean);
+
+const corsOptions = {
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like Postman, curl)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) return callback(null, true);
+    return callback(new Error("Not allowed by CORS"));
+  },
+  methods: ["GET", "POST", "DELETE", "PUT", "OPTIONS"],
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
+// Explicitly enable preflight across the board
+app.options("*", cors(corsOptions));
 
 app.use(cookieParser());
 app.use(express.json());

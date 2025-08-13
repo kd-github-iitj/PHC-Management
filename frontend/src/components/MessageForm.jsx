@@ -30,7 +30,11 @@ const MessageForm = () => {
           setMessage("");
         });
     } catch (error) {
-      toast.error(error.response.data.message);
+      const msg =
+        error?.response?.data?.message ||
+        error?.message ||
+        "Request failed";
+      toast.error(msg);
     }
   };
 

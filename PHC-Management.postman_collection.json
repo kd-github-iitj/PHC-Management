@@ -1,0 +1,297 @@
+{
+  "info": {
+    "_postman_id": "8b8f4f3a-6e60-4a1c-b1a8-collection-phc",
+    "name": "PHC Management API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Postman collection for PHC Management backend API (Express + MongoDB). Use the requests to authenticate as Admin/Patient, manage users, messages, and appointments. Cookies (adminToken/patientToken) are set by the server on login/register and are stored in Postman's cookie jar automatically."
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:4000", "type": "string" },
+    { "key": "adminEmail", "value": "admin@example.com", "type": "string" },
+    { "key": "adminPassword", "value": "AdminPass123", "type": "string" },
+    { "key": "patientEmail", "value": "patient@example.com", "type": "string" },
+    { "key": "patientPassword", "value": "PatientPass123", "type": "string" },
+    { "key": "appointmentId", "value": "", "type": "string" },
+    { "key": "doctorFirstName", "value": "John", "type": "string" },
+    { "key": "doctorLastName", "value": "Doe", "type": "string" },
+    { "key": "doctorDepartment", "value": "Cardiology", "type": "string" }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Patient Register",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/user/patient/register",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "user", "patient", "register"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Jane\",\n  \"lastName\": \"Patient\",\n  \"email\": \"{{patientEmail}}\",\n  \"phone\": \"03001234567\",\n  \"nic\": \"1234567890123\",\n  \"dob\": \"1995-01-01\",\n  \"gender\": \"Female\",\n  \"password\": \"{{patientPassword}}\"\n}"
+            },
+            "description": "Registers a new Patient. Sets patientToken cookie."
+          }
+        },
+        {
+          "name": "Login as Patient",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/user/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "user", "login"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{patientEmail}}\",\n  \"password\": \"{{patientPassword}}\",\n  \"confirmPassword\": \"{{patientPassword}}\",\n  \"role\": \"Patient\"\n}"
+            },
+            "description": "Logs in as Patient. Sets patientToken cookie."
+          }
+        },
+        {
+          "name": "Login as Admin",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/user/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "user", "login"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{adminEmail}}\",\n  \"password\": \"{{adminPassword}}\",\n  \"confirmPassword\": \"{{adminPassword}}\",\n  \"role\": \"Admin\"\n}"
+            },
+            "description": "Logs in as Admin. Sets adminToken cookie."
+          }
+        },
+        {
+          "name": "Get Patient Me",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/user/patient/me",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "user", "patient", "me"]
+            },
+            "description": "Returns current Patient user. Requires patientToken cookie."
+          }
+        },
+        {
+          "name": "Get Admin Me",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/user/admin/me",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "user", "admin", "me"]
+            },
+            "description": "Returns current Admin user. Requires adminToken cookie."
+          }
+        },
+        {
+          "name": "Logout Patient",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/user/patient/logout",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "user", "patient", "logout"]
+            },
+            "description": "Clears patientToken cookie."
+          }
+        },
+        {
+          "name": "Logout Admin",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/user/admin/logout",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "user", "admin", "logout"]
+            },
+            "description": "Clears adminToken cookie."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Get Doctors (Public)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/user/doctors",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "user", "doctors"]
+            }
+          }
+        },
+        {
+          "name": "Add New Admin (Admin only)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/user/admin/addnew",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "user", "admin", "addnew"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Alice\",\n  \"lastName\": \"Admin\",\n  \"email\": \"admin2@example.com\",\n  \"phone\": \"03001234567\",\n  \"nic\": \"9876543210123\",\n  \"dob\": \"1990-05-05\",\n  \"gender\": \"Female\",\n  \"password\": \"AdminPass234\"\n}"
+            },
+            "description": "Requires adminToken cookie."
+          }
+        },
+        {
+          "name": "Add New Doctor (Admin only, form-data)",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/user/doctor/addnew",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "user", "doctor", "addnew"]
+            },
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "firstName", "value": "{{doctorFirstName}}", "type": "text" },
+                { "key": "lastName", "value": "{{doctorLastName}}", "type": "text" },
+                { "key": "email", "value": "doctor@example.com", "type": "text" },
+                { "key": "phone", "value": "03001234567", "type": "text" },
+                { "key": "nic", "value": "1234567890123", "type": "text" },
+                { "key": "dob", "value": "1990-01-01", "type": "text" },
+                { "key": "gender", "value": "Male", "type": "text" },
+                { "key": "password", "value": "DoctorPass123", "type": "text" },
+                { "key": "doctorDepartment", "value": "{{doctorDepartment}}", "type": "text" },
+                { "key": "docAvatar", "type": "file", "src": "" }
+              ]
+            },
+            "description": "Requires adminToken cookie. Set docAvatar as a file in Postman."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Messages",
+      "item": [
+        {
+          "name": "Send Message (Public)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/message/send",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "message", "send"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"John\",\n  \"lastName\": \"Smith\",\n  \"email\": \"john@example.com\",\n  \"phone\": \"03001234567\",\n  \"message\": \"Hello, I have a question.\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Get All Messages (Admin only)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/message/getall",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "message", "getall"]
+            },
+            "description": "Requires adminToken cookie."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Appointments",
+      "item": [
+        {
+          "name": "Create Appointment (Patient only)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/appointment/post",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "appointment", "post"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Jane\",\n  \"lastName\": \"Patient\",\n  \"email\": \"{{patientEmail}}\",\n  \"phone\": \"03001234567\",\n  \"nic\": \"1234567890123\",\n  \"dob\": \"1995-01-01\",\n  \"gender\": \"Female\",\n  \"appointment_date\": \"2025-09-01\",\n  \"department\": \"{{doctorDepartment}}\",\n  \"doctor_firstName\": \"{{doctorFirstName}}\",\n  \"doctor_lastName\": \"{{doctorLastName}}\",\n  \"hasVisited\": false,\n  \"address\": \"123 Street, City\"\n}"
+            },
+            "description": "Requires patientToken cookie."
+          }
+        },
+        {
+          "name": "Get All Appointments (Admin only)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/appointment/getall",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "appointment", "getall"]
+            },
+            "description": "Requires adminToken cookie."
+          }
+        },
+        {
+          "name": "Update Appointment Status (Admin only)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/appointment/update/{{appointmentId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "appointment", "update", "{{appointmentId}}"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"Accepted\"\n}"
+            },
+            "description": "Requires adminToken cookie. Set appointmentId variable from a prior response."
+          }
+        },
+        {
+          "name": "Delete Appointment (Admin only)",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/appointment/delete/{{appointmentId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "appointment", "delete", "{{appointmentId}}"]
+            },
+            "description": "Requires adminToken cookie."
+          }
+        }
+      ]
+    }
+  ]
+}
+
+
